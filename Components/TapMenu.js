@@ -14,7 +14,6 @@ const StyledTouchableOpacity = styled.TouchableOpacity`
   z-index: 10;
   height: 60px;
   line-height: 60px;
-  text-align: center;
   background-color: #424242;
   flex: 1;
   ${({ isFocused }) =>
@@ -29,6 +28,7 @@ const StyledTouchableOpacity = styled.TouchableOpacity`
 `
 const StyledText = styled.Text`
   font-size: 18px;
+  text-align: center;
   align-self: stretch;
   color: white;
   font-weight: bold;
@@ -76,6 +76,7 @@ const TapMenu = ({ state, descriptors, navigation }) => {
 
         return (
           <StyledTouchableOpacity
+            activeOpacity="1"
             accessibilityRole="button"
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
