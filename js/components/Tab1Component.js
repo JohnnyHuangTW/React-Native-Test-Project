@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { Text } from 'react-native'
 import styled from 'styled-components/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { DataService, Keys } from '../services/dataService'
+import { useDispatch } from 'react-redux'
+import { setProfileAge } from '../models/profileModel'
 
 const StyledTextInput = styled.TextInput`
   border: 1px solid #000;
@@ -17,9 +18,10 @@ const Button = styled.Button`
 `
 
 const Tab1Component = () => {
+  const dispatch = useDispatch()
   const [age, setAge] = useState('')
   const save = () => {
-    DataService.saveData(Keys.USER_PROFILE, age)
+    dispatch(setProfileAge(age))
   }
   return (
     <SafeAreaView style={{ flex: 1, alignItems: 'center', margin: 12 }}>

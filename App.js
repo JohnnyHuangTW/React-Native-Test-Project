@@ -1,9 +1,15 @@
 import React from 'react'
 import { Text } from 'react-native'
+// Redux setup
+import { Provider } from 'react-redux'
+import store from './js/models'
+// SafeArea setup
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
+// Navigator setup
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
+// Device info
 import * as Device from 'expo-device'
 
 // components
@@ -25,16 +31,18 @@ const Tab = createBottomTabNavigator()
 
 export default function App() {
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <Tab.Navigator initialRouteName="Tab1" tabBar={props => <TabMenu {...props} />}>
-          <Tab.Screen name="Tab1" component={Tab1Component} />
-          <Tab.Screen name="Tab2" component={Tab2Component} />
-          <Tab.Screen name="Tab3" component={Demo} />
-          <Tab.Screen name="Tab4" component={Demo} />
-          <Tab.Screen name="Tab5" component={Demo} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <Tab.Navigator initialRouteName="Tab1" tabBar={props => <TabMenu {...props} />}>
+            <Tab.Screen name="Tab1" component={Tab1Component} />
+            <Tab.Screen name="Tab2" component={Tab2Component} />
+            <Tab.Screen name="Tab3" component={Demo} />
+            <Tab.Screen name="Tab4" component={Demo} />
+            <Tab.Screen name="Tab5" component={Demo} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </Provider>
   )
 }
