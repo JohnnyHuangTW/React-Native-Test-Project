@@ -7,9 +7,9 @@ import { createStackNavigator } from '@react-navigation/stack'
 import * as Device from 'expo-device'
 
 // components
-import TabMenu from './Components/TapMenu'
-import Tab1Component from './Components/Tab1Component'
-import Tab2Component from './Components/Tab2Component'
+import TabMenu from './js/components/TapMenu'
+import Tab1Component from './js/components/Tab1Component'
+import Tab2Component from './js/components/Tab2Component'
 
 const Demo = () => {
   return (

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Text } from 'react-native'
 import styled from 'styled-components/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { DataService, Keys } from '../Services/dataService'
+import { DataService, Keys } from '../services/dataService'
 
 const StyledTextInput = styled.TextInput`
   border: 1px solid #000;
