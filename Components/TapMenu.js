@@ -76,6 +76,7 @@ const TapMenu = ({ state, descriptors, navigation }) => {
 
         return (
           <StyledTouchableOpacity
+            key={index}
             activeOpacity="1"
             accessibilityRole="button"
             accessibilityState={isFocused ? { selected: true } : {}}

@@ -8,6 +8,8 @@ import * as Device from 'expo-device'
 
 // components
 import TabMenu from './Components/TapMenu'
+import Tab1Component from './Components/Tab1Component'
+import Tab2Component from './Components/Tab2Component'
 
 const Demo = () => {
   return (
@@ -26,8 +28,8 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Tab.Navigator initialRouteName="Tab1" tabBar={props => <TabMenu {...props} />}>
-          <Tab.Screen name="Tab1" component={Demo} />
-          <Tab.Screen name="Tab2" component={Demo} />
+          <Tab.Screen name="Tab1" component={Tab1Component} />
+          <Tab.Screen name="Tab2" component={Tab2Component} />
           <Tab.Screen name="Tab3" component={Demo} />
           <Tab.Screen name="Tab4" component={Demo} />
           <Tab.Screen name="Tab5" component={Demo} />
