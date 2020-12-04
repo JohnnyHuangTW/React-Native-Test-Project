@@ -2,7 +2,7 @@ import React from 'react'
 import { Text } from 'react-native'
 // Redux setup
 import { Provider } from 'react-redux'
-import store from './js/models'
+import store from './js/reducers/store'
 // SafeArea setup
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 // Navigator setup

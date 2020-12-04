@@ -6,15 +6,13 @@ const { USER_PROFILE } = Keys
 // Slice
 const profileSlice = createSlice({
   name: 'profile',
-  initialState: {
-    profile: {}
-  },
+  initialState: {},
   reducers: {
     setProfile: (state, action) => {
-      state.profile = action.payload
+      state = action.payload
     },
     setAge: (state, action) => {
-      state.profile.age = action.payload
+      state.age = action.payload
     }
   }
 })
@@ -22,8 +20,7 @@ const profileSlice = createSlice({
 export default profileSlice.reducer
 
 // Actions
-const { setProfile, setAge } = profileSlice.actions
-
+export const { setProfile, setAge } = profileSlice.actions
 export const getProfile = () => async dispatch => {
   try {
     // call api
@@ -36,10 +33,3 @@ export const getProfile = () => async dispatch => {
   }
 }
 
-export const setProfileAge = age => async dispatch => {
-  try {
-    dispatch(setAge(age))
-  } catch (e) {
-    return console.error(e)
-  }
-}

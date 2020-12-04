@@ -5,10 +5,10 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useSelector } from 'react-redux'
 
 const Tab2Component = () => {
-  const { profile } = useSelector(state => state.profile)
+  const { age } = useSelector(state => state.profile)
   return (
     <SafeAreaView style={{ flex: 1, alignItems: 'center', margin: 12 }}>
-      <Text>Your age is {profile?.age}</Text>
+      <Text>Your age is {age}</Text>
     </SafeAreaView>
   )
 }

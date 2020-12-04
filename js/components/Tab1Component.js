@@ -3,7 +3,7 @@ import { Text } from 'react-native'
 import styled from 'styled-components/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
-import { setProfileAge } from '../models/profileModel'
+import { setAge as setProfileAge } from '../reducers/profileReducer'
 
 const StyledTextInput = styled.TextInput`
   border: 1px solid #000;
