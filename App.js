@@ -14,8 +14,8 @@ import * as Device from 'expo-device'
 
 // components
 import TabMenu from './js/components/TapMenu'
-import Tab1Component from './js/components/Tab1Component'
-import Tab2Component from './js/components/Tab2Component'
+import Tab1Component from './js/containers/Tab1Component'
+import Tab2Component from './js/containers/Tab2Component'
 
 const Demo = () => {
   return (
