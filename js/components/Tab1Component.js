@@ -3,7 +3,7 @@ import { Text } from 'react-native'
 import styled from 'styled-components/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
-import { setAge as setProfileAge } from '../reducers/profileReducer'
+import { saveProfileAge } from '../reducers/profileReducer'
 
 const StyledTextInput = styled.TextInput`
   border: 1px solid #000;
@@ -21,7 +21,7 @@ const Tab1Component = () => {
   const dispatch = useDispatch()
   const [age, setAge] = useState('')
   const save = () => {
-    dispatch(setProfileAge(age))
+    dispatch(saveProfileAge(age))
   }
   return (
     <SafeAreaView style={{ flex: 1, alignItems: 'center', margin: 12 }}>

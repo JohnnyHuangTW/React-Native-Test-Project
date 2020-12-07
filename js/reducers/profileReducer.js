@@ -9,7 +9,7 @@ const profileSlice = createSlice({
   initialState: {},
   reducers: {
     setProfile: (state, action) => {
-      state = action.payload
+      state = {...action.payload}
     },
     setAge: (state, action) => {
       state.age = action.payload
@@ -17,19 +17,18 @@ const profileSlice = createSlice({
   }
 })
 
-export default profileSlice.reducer
+const { actions, reducer } = profileSlice
 
 // Actions
-export const { setProfile, setAge } = profileSlice.actions
-export const getProfile = () => async dispatch => {
+export const { setProfile, setAge } = actions
+export const saveProfileAge = age => async (dispatch, getState) => {
   try {
-    // call api
-    DataService.getData(USER_PROFILE).then(data => {
-      console.log('get profile', data)
-      if (data) dispatch(setProfile({ payload: data }))
-    })
-  } catch (e) {
-    return console.error(e)
+      dispatch(setAge(age))
+      const profile = getState().profile
+      DataService.saveData(USER_PROFILE, profile)
+  } catch (error) {
+    return console.error(error)
   }
 }
 
+export default reducer
