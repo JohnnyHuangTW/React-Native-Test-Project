@@ -11,11 +11,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 // Device info
 import * as Device from 'expo-device'
-
-// components
-import TabMenu from './js/components/TapMenu'
+// Screens
 import Tab1Component from './js/screens/Tab1Component'
 import Tab2Component from './js/screens/Tab2Component'
+// components
+import TabMenu from './js/components/TapMenu'
+import BottomSheet from './js/components/BottomSheet'
+
 
 const Demo = () => {
   return (
@@ -25,7 +27,6 @@ const Demo = () => {
     </SafeAreaView>
   )
 }
-
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
 
@@ -34,6 +35,7 @@ export default function App() {
     <Provider store={store}>
       <SafeAreaProvider>
         <NavigationContainer>
+          <BottomSheet />
           <Tab.Navigator initialRouteName="Tab1" tabBar={props => <TabMenu {...props} />}>
             <Tab.Screen name="Tab1" component={Tab1Component} />
             <Tab.Screen name="Tab2" component={Tab2Component} />

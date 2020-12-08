@@ -3,6 +3,7 @@ import { Text, View } from 'react-native'
 import styled from 'styled-components/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
+// Reducers
 import { saveProfileAge } from '../reducers/profileReducer'
 
 import Gallery from '../components/Gallery'
