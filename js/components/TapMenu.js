@@ -7,7 +7,7 @@ const Wrapper = styled.View`
   width: 100%;
   justify-content: space-evenly;
   align-items: flex-end;
-  height: 60px;
+  height: 25px;
 `
 
 const StyledTouchableOpacity = styled.TouchableOpacity`
