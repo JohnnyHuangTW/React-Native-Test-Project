@@ -8,6 +8,7 @@ import { saveProfileAge } from '../reducers/profileReducer'
 // Components
 import Gallery from '../components/Gallery'
 import DailyMission from '../components/DailyMission'
+import TokenItem from '../components/TokenItem'
 
 const StyledTextInput = styled.TextInput`
   border: 1px solid #000;
@@ -19,6 +20,14 @@ const StyledTextInput = styled.TextInput`
 const Button = styled.Button`
   height: 40px;
   width: 80px;
+`
+
+const TokenBarWrapper = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin: 20px 0;
+  padding: 0 18px;
 `
 
 const DailyMissionWrapper = styled.View`
@@ -72,15 +81,18 @@ const Tab1Component = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, alignItems: 'center' }}>
-      <Text>Enter your age</Text>
+      {/* <Text>Enter your age</Text>
       <StyledTextInput onChangeText={setAge} value={age} />
-      <Button title="Save" onPress={save} />
+      <Button title="Save" onPress={save} /> */}
+
+      <TokenBarWrapper>
+        <TokenItem color="#ffc107" callback={() => {}} />
+        <TokenItem color="#4dd0e1" callback={() => {}} />
+        <TokenItem color="#81c784" callback={() => {}} />
+      </TokenBarWrapper>
 
       <DailyMissionWrapper>
-        <DailyMission
-          percentage={'80%'}
-          onPressGift={() => console.log('gift onPress')}
-        />
+        <DailyMission percentage={'80%'} onPressGift={() => console.log('gift onPress')} />
       </DailyMissionWrapper>
 
       <GalleryWrapper>
