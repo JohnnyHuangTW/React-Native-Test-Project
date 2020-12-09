@@ -11,7 +11,6 @@ const Wrapper = styled.View`
 
 const StyledImageBackground = styled.ImageBackground`
   flex: 1;
-  resize-mode: cover;
   flex-direction: column-reverse;
 `
 
@@ -36,13 +35,12 @@ const Detail = styled.View`
   justify-content: space-between;
 `
 
-
 const GalleryItem = ({ image, name, price, fee, callback = () => {} }) => {
   return (
     <Wrapper>
       <StyledImageBackground
         source={{ uri: image }}
-        imageStyle={{ borderRadius: 12 }}
+        imageStyle={{ borderRadius: 12, resizeMode: 'cover' }}
         onPress={callback}
       >
         <InfoBlock>

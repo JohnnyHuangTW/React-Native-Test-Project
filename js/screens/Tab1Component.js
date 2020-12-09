@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, View } from 'react-native'
+import { ScrollView, Dimensions, StyleSheet } from 'react-native'
 import styled from 'styled-components/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
@@ -10,16 +10,22 @@ import Gallery from '../components/Gallery'
 import DailyMission from '../components/DailyMission'
 import TokenItem from '../components/TokenItem'
 
-const StyledTextInput = styled.TextInput`
-  border: 1px solid #000;
-  width: 200px;
-  margin: 8px;
-  padding: 8px;
+const ImageBackground = styled.ImageBackground`
+  flex: 1;
+  width: 100%;
 `
 
-const Button = styled.Button`
-  height: 40px;
-  width: 80px;
+const ImageHeader = styled.View`
+  height: 200px;
+  background-color: transparent;
+`
+
+const ThumbContainer = styled.View`
+  flex: 1;
+  width: 100%;
+  background-color: white;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
 `
 
 const TokenBarWrapper = styled.View`
@@ -72,6 +78,9 @@ const gameList = [
 ]
 
 const Tab1Component = () => {
+  const windowWidth = Math.round(Dimensions.get('window').width)
+  const backgroundImageSrc = { url: `https://picsum.photos/${windowWidth}/400?random=1` }
+
   const dispatch = useDispatch()
   const [age, setAge] = useState('')
 
@@ -81,25 +90,50 @@ const Tab1Component = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, alignItems: 'center' }}>
-      {/* <Text>Enter your age</Text>
-      <StyledTextInput onChangeText={setAge} value={age} />
-      <Button title="Save" onPress={save} /> */}
+      <ImageBackground
+        source={backgroundImageSrc}
+        imageStyle={{
+          height: 400,
+          width: windowWidth,
+          resizeMode: 'cover'
+        }}
+      >
+        {/* Tokens */}
+        <TokenBarWrapper>
+          <TokenItem color="#ffc107" callback={() => {}} />
+          <TokenItem color="#4dd0e1" callback={() => {}} />
+          <TokenItem color="#81c784" callback={() => {}} />
+        </TokenBarWrapper>
 
-      <TokenBarWrapper>
-        <TokenItem color="#ffc107" callback={() => {}} />
-        <TokenItem color="#4dd0e1" callback={() => {}} />
-        <TokenItem color="#81c784" callback={() => {}} />
-      </TokenBarWrapper>
+        <ImageHeader />
 
-      <DailyMissionWrapper>
-        <DailyMission percentage={'80%'} onPressGift={() => console.log('gift onPress')} />
-      </DailyMissionWrapper>
-
-      <GalleryWrapper>
-        <Gallery title="Sample Title" gameList={gameList} />
-      </GalleryWrapper>
+        <ThumbContainer style={styles.shadow}>
+          {/* Daily Missions */}
+          <DailyMissionWrapper>
+            <DailyMission percentage={'80%'} onPressGift={() => console.log('gift onPress')} />
+          </DailyMissionWrapper>
+          <ScrollView style={{ flex: 1 }}>
+            {/* Gallery Lists */}
+            <GalleryWrapper>
+              <Gallery title="Recently Played" gameList={gameList} />
+            </GalleryWrapper>
+            <GalleryWrapper>
+              <Gallery title="Related to Games You've Played" gameList={gameList} />
+            </GalleryWrapper>
+          </ScrollView>
+        </ThumbContainer>
+      </ImageBackground>
     </SafeAreaView>
   )
 }
 
 export default Tab1Component
+
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: -6 },
+    shadowRadius: 5,
+    shadowOpacity: 0.1
+  }
+})

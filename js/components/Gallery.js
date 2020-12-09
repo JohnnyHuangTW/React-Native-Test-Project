@@ -24,6 +24,7 @@ const Header = styled.View`
 
 const Title = styled.Text`
   font-size: 18px;
+  font-weight: bold;
 `
 
 const GalleryScrollView = styled.ScrollView`
