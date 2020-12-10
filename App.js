@@ -37,11 +37,11 @@ export default function App() {
         <NavigationContainer>
           <BottomSheet />
           <Tab.Navigator initialRouteName="Tab1" tabBar={props => <TabMenu {...props} />}>
-            <Tab.Screen name="Tab1" component={Tab1Component} />
-            <Tab.Screen name="Tab2" component={Tab2Component} />
-            <Tab.Screen name="Tab3" component={Demo} />
-            <Tab.Screen name="Tab4" component={Demo} />
-            <Tab.Screen name="Tab5" component={Demo} />
+            <Tab.Screen name="ACCOUNT" component={Tab1Component} />
+            <Tab.Screen name="GAMES" component={Tab2Component} />
+            <Tab.Screen name="HOME" component={Demo} />
+            <Tab.Screen name="NEWS" component={Demo} />
+            <Tab.Screen name="OPTIONS" component={Demo} />
           </Tab.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>

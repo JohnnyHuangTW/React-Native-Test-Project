@@ -1,5 +1,15 @@
 import React from 'react'
 import styled from 'styled-components/native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { MaterialIcons } from '@expo/vector-icons'
+
+const mapIcon = {
+  ACCOUNT: 'person',
+  GAMES: 'videogame-asset',
+  HOME: 'home',
+  NEWS: 'send',
+  OPTIONS: 'format-list-bulleted'
+}
 
 const Wrapper = styled.View`
   display: flex;
@@ -7,43 +17,44 @@ const Wrapper = styled.View`
   width: 100%;
   justify-content: space-evenly;
   align-items: flex-end;
-  height: 25px;
+  height: ${({insetBottom}) => 75 - insetBottom}px;
 `
 
 const StyledTouchableOpacity = styled.TouchableOpacity`
-  z-index: 10;
-  height: 60px;
-  line-height: 60px;
-  background-color: #424242;
   flex: 1;
+  z-index: 10;
+  height: 65px;
+  align-items: center;
+  background-color: #424242;
+  padding: 10px 5px ${({ insetBottom }) => insetBottom}px 5px;
   ${({ isFocused }) =>
     isFocused &&
     `
       flex: 1.5;
-      height: 80px;
-      line-height: 80px;
+      height: 75px;
       border-top-left-radius: 12px;
       border-top-right-radius: 12px;
     `}
 `
 const StyledText = styled.Text`
-  font-size: 18px;
+  font-size: ${({ isFocused }) => (isFocused ? 10 : 6)}px;
   text-align: center;
   align-self: stretch;
   color: white;
   font-weight: bold;
-  line-height: ${({ isFocused }) => (isFocused ? '80px' : '60px')};
+  margin-top: 5px;
 `
 
 const TapMenu = ({ state, descriptors, navigation }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options
+  const insetBottom = useSafeAreaInsets().bottom
 
   if (focusedOptions.tabBarVisible === false) {
     return null
   }
 
   return (
-    <Wrapper>
+    <Wrapper insetBottom={insetBottom}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key]
         const label =
@@ -52,6 +63,8 @@ const TapMenu = ({ state, descriptors, navigation }) => {
             : options.title !== undefined
             ? options.title
             : route.name
+
+        const icon = mapIcon[label] || 'error'
 
         const isFocused = state.index === index
 
@@ -85,8 +98,14 @@ const TapMenu = ({ state, descriptors, navigation }) => {
             onPress={onPress}
             onLongPress={onLongPress}
             isFocused={isFocused}
+            insetBottom={insetBottom}
           >
-            <StyledText>{label}</StyledText>
+            <MaterialIcons
+              name={icon}
+              color={isFocused ? '#90caf9' : 'white'}
+              size={isFocused ? 28 : 24}
+            />
+            <StyledText isFocused={isFocused}>{label}</StyledText>
           </StyledTouchableOpacity>
         )
       })}
