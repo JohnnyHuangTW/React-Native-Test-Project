@@ -9,20 +9,11 @@ import BottomSheet from 'reanimated-bottom-sheet'
 // Reducers
 import { hideBottomSheet } from '../reducers/bottomSheetReducer'
 
-// header's height + content's height = bs height
-// const Header = styled.View`
-//   height: 50px;
-// `
-// const Content = styled.View`
-//   justify-content: flex-end;
-//   height: 250px;
-// `
 
 const MyBottomSheet = () => {
   const dispatch = useDispatch()
-  // const insets = useSafeAreaInsets()
   const { visible, modelName } = useSelector(state => state.bottomSheet)
-  const { header, content } = bottomSheetModels[modelName] || {}
+  const content = bottomSheetModels[modelName]
   const snapPoints = [300, 0]
   const bs = React.createRef()
 
@@ -36,23 +27,15 @@ const MyBottomSheet = () => {
 
   const renderHeader = () => {
     return (
-      header && (
-        <View style={styles.header}>
-          <View style={styles.panelHeader}>
-            <View style={styles.panelHandle} />
-          </View>
+      <View style={styles.header}>
+        <View style={styles.panelHeader}>
+          <View style={styles.panelHandle} />
         </View>
-      )
+      </View>
     )
   }
   const renderContent = () => {
-    return (
-      content && (
-        <View style={styles.panel}>
-          {content}
-        </View>
-      )
-    )
+    return content && <View style={styles.panel}>{content}</View>
   }
   return (
     <BottomSheet
@@ -82,9 +65,9 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     shadowColor: '#000000',
-    shadowOffset: { width: 0, height: -8},
+    shadowOffset: { width: 0, height: -8 },
     shadowRadius: 5,
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.1
   },
   panelHeader: {
     alignItems: 'center'
