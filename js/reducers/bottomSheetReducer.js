@@ -1,4 +1,6 @@
+import React from 'react'
 import { createSlice } from '@reduxjs/toolkit'
+import { Text } from 'react-native'
 
 // Slice
 const bottomSheetSlice = createSlice({

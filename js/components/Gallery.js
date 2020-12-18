@@ -1,10 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/native'
 import { Feather } from '@expo/vector-icons'
-import { useDispatch } from 'react-redux'
-// Reducers
-import { showBottomSheet } from '../reducers/bottomSheetReducer'
-import { bottomSheetKeys } from '../services/bottomSheetModels'
 
 import GalleryItem from './GalleryItem'
 
@@ -31,12 +27,7 @@ const GalleryScrollView = styled.ScrollView`
   padding: 10px 0;
 `
 
-const Gallery = ({ title, gameList }) => {
-  const dispatch = useDispatch()
-  const onPressMoreInfo = () => {
-    console.log('onPress: More Info')
-    dispatch(showBottomSheet(bottomSheetKeys.GALLERY_MORE_INFO))
-  }
+const Gallery = ({ title, gameList, onPressMoreInfo }) => {
   return (
     <Container>
       <Header>
@@ -45,10 +36,9 @@ const Gallery = ({ title, gameList }) => {
       </Header>
 
       <GalleryScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        {gameList
-          .map((game, index) => (
-            <GalleryItem key={index} {...game} />
-          ))}
+        {gameList.map((game, index) => (
+          <GalleryItem key={index} {...game} />
+        ))}
       </GalleryScrollView>
     </Container>
   )

@@ -1,17 +1,10 @@
 import React, { useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import { bottomSheetModels } from '../services/bottomSheetModels'
 import BottomSheet from 'reanimated-bottom-sheet'
-// Reducers
-import { hideBottomSheet } from '../reducers/bottomSheetReducer'
+import { Entypo } from '@expo/vector-icons'
 
-
-const MyBottomSheet = () => {
-  const dispatch = useDispatch()
-  const { visible, modelName } = useSelector(state => state.bottomSheet)
-  const content = bottomSheetModels[modelName]
-  const snapPoints = [300, 0]
+const SelectionView = ({ visible, onClose, height, children }) => {
+  const snapPoints = height ? [height, 0] : [300, 0]
   const bs = React.createRef()
 
   useEffect(() => {
@@ -26,48 +19,49 @@ const MyBottomSheet = () => {
     return (
       <View style={styles.header}>
         <View style={styles.panelHeader}>
-          <View style={styles.panelHandle} />
+          <Entypo name="circle-with-cross" size={24} color="#9e9e9e" onPress={onClose} />
         </View>
       </View>
     )
   }
   const renderContent = () => {
-    return content && <View style={styles.panel}>{content}</View>
+    return children && <View style={styles.panel}>{children}</View>
   }
   return (
     <BottomSheet
       ref={bs}
       snapPoints={snapPoints}
       initialSnap={0}
-      enabledGestureInteraction={true}
+      enabledGestureInteraction={false}
       renderHeader={renderHeader}
       renderContent={renderContent}
-      onCloseEnd={() => dispatch(hideBottomSheet())}
+      onClose={onClose}
     />
   )
 }
 
-export default MyBottomSheet
+export default SelectionView
 
 const styles = StyleSheet.create({
   panel: {
     height: 300,
     padding: 20,
-    backgroundColor: '#f7f5eee8'
+    paddingTop: 0,
+    backgroundColor: '#f7f5ee'
   },
   header: {
-    backgroundColor: '#f7f5eee8',
-    shadowColor: '#000000',
+    backgroundColor: '#f7f5ee',
     paddingTop: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     shadowColor: '#000000',
-    shadowOffset: { width: 0, height: -8 },
+    shadowOffset: { width: 0, height: -7 },
     shadowRadius: 5,
     shadowOpacity: 0.1
   },
   panelHeader: {
-    alignItems: 'center'
+    paddingRight: 20,
+    alignItems: 'flex-end'
   },
   panelHandle: {
     width: 40,

@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
-import { ScrollView, Dimensions, StyleSheet } from 'react-native'
+import { ScrollView, Dimensions, StyleSheet, Text } from 'react-native'
 import styled from 'styled-components/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
 // Reducers
-import { saveProfileAge } from '../reducers/profileReducer'
+import { showBottomSheet } from '../reducers/bottomSheetReducer'
+import { bottomSheetKeys } from '../services/bottomSheetModels'
 // Components
 import Gallery from '../components/Gallery'
 import DailyMission from '../components/DailyMission'
 import TokenItem from '../components/TokenItem'
+import SelectionView from '../components/SelectionView'
 
 const ImageBackground = styled.ImageBackground`
   flex: 1;
@@ -78,52 +80,62 @@ const gameList = [
 ]
 
 const Tab1Component = () => {
+  const dispatch = useDispatch()
   const windowWidth = Math.round(Dimensions.get('window').width)
   const backgroundImageSrc = { url: `https://picsum.photos/${windowWidth}/400?random=1` }
-
-  const dispatch = useDispatch()
-  const [age, setAge] = useState('')
-
-  const save = () => {
-    dispatch(saveProfileAge(age))
-  }
-
+  const [selectionVisible, setSelectionVisible] = useState(false)
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center' }}>
-      <ImageBackground
-        source={backgroundImageSrc}
-        imageStyle={{
-          height: 400,
-          width: windowWidth,
-          resizeMode: 'cover'
-        }}
-      >
-        {/* Tokens */}
-        <TokenBarWrapper>
-          <TokenItem color="#ffc107" callback={() => {}} />
-          <TokenItem color="#4dd0e1" callback={() => {}} />
-          <TokenItem color="#81c784" callback={() => {}} />
-        </TokenBarWrapper>
+    <>
+      <SafeAreaView style={{ flex: 1, alignItems: 'center' }}>
+        <ImageBackground
+          source={backgroundImageSrc}
+          imageStyle={{
+            height: 400,
+            width: windowWidth,
+            resizeMode: 'cover'
+          }}
+        >
+          {/* Tokens */}
+          <TokenBarWrapper>
+            <TokenItem color="#ffc107" callback={() => {}} />
+            <TokenItem color="#4dd0e1" callback={() => {}} />
+            <TokenItem color="#81c784" callback={() => {}} />
+          </TokenBarWrapper>
 
-        <ImageHeader />
+          <ImageHeader />
 
-        <ThumbContainer style={styles.shadow}>
-          {/* Daily Missions */}
-          <DailyMissionWrapper>
-            <DailyMission percentage={'80%'} onPressGift={() => console.log('gift onPress')} />
-          </DailyMissionWrapper>
-          <ScrollView style={{ flex: 1 }}>
-            {/* Gallery Lists */}
-            <GalleryWrapper>
-              <Gallery title="Recently Played" gameList={gameList} />
-            </GalleryWrapper>
-            <GalleryWrapper>
-              <Gallery title="Related to Games You've Played" gameList={gameList} />
-            </GalleryWrapper>
-          </ScrollView>
-        </ThumbContainer>
-      </ImageBackground>
-    </SafeAreaView>
+          <ThumbContainer style={styles.shadow}>
+            {/* Daily Missions */}
+            <DailyMissionWrapper>
+              <DailyMission percentage={'80%'} onPressGift={() => console.log('gift onPress')} />
+            </DailyMissionWrapper>
+            <ScrollView style={{ flex: 1 }}>
+              {/* Gallery Lists */}
+              <GalleryWrapper>
+                <Gallery
+                  title="Recently Played"
+                  gameList={gameList}
+                  onPressMoreInfo={() =>
+                    dispatch(showBottomSheet(bottomSheetKeys.GALLERY_MORE_INFO))
+                  }
+                />
+              </GalleryWrapper>
+              <GalleryWrapper>
+                <Gallery
+                  title="Related to Games You've Played"
+                  gameList={gameList}
+                  onPressMoreInfo={() => setSelectionVisible(true)}
+                />
+              </GalleryWrapper>
+            </ScrollView>
+          </ThumbContainer>
+        </ImageBackground>
+      </SafeAreaView>
+
+      <SelectionView visible={selectionVisible} onClose={() => setSelectionVisible(false)}>
+        <Text>test</Text>
+      </SelectionView>
+    </>
   )
 }
 
