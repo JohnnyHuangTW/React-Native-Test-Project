@@ -41,7 +41,7 @@ const InfoFeeText = styled.Text`
   font-weight: bold;
 `
 
-const CategoryGalleryItem = ({ image, name, price, fee, callback = () => {} }) => {
+const GameInfoCard = ({ image, name, price, fee, callback = () => {} }) => {
   return (
     <Wrapper>
       <StyledImageBackground
@@ -67,4 +67,4 @@ const CategoryGalleryItem = ({ image, name, price, fee, callback = () => {} }) =
   )
 }
 
-export default CategoryGalleryItem
+export default GameInfoCard
