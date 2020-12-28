@@ -10,7 +10,6 @@ const rootReducer = combineReducers({
   bottomSheet: bottomSheetReducer
 })
 
-
 const store = configureStore({
   reducer: rootReducer
 })

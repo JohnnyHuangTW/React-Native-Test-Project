@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/native'
 import { FontAwesome5 } from '@expo/vector-icons'
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const SearchFilterContainer = styled.View`
   display: flex;
@@ -52,12 +52,12 @@ const CategoryContainer = styled.View`
   padding-bottom: 10px;
 `
 
-const CategoryItemWrapper = styled.View`
+const CategoryItemWrapper = styled.TouchableHighlight`
   padding: 10px;
-  background-color: #000;
   border-radius: 50px;
   margin-left: 5px;
   min-width: 80px;
+  background-color: ${({ selected }) => (selected ? 'purple' : '#000')};
 `
 
 const CategoryContent = styled.Text`
@@ -65,17 +65,37 @@ const CategoryContent = styled.Text`
   color: #fff;
 `
 const GalleryContainer = styled.View`
+  flex: 1;
   width: 100%;
 `
 
-const Filter = ({ categoryList, children }) => {
+const Filter = ({ onFilterChange = () => {}, categoryList, children }) => {
+  const [searchValue, setSearchValue] = useState('')
+  const [selected, setSelected] = useState([])
+
+  useEffect(() => {
+    onFilterChange({
+      searchText: searchValue,
+      selectedCategory: selected
+    })
+  }, [searchValue, selected])
+
+  const onCategorySelectedHandler = cat => {
+    if (selected.includes(cat)) setSelected(selected.filter(category => category !== cat))
+    else setSelected([...selected, cat])
+  }
+
   return (
     <React.Fragment>
       {/* Search Filter */}
       <SearchFilterContainer>
         <SearchBarWrapper>
-          <SearchBar placeholder="Search" />
-          <SearchIconWrapper>
+          <SearchBar
+            placeholder="Search"
+            value={searchValue}
+            onChange={event => setSearchValue(event.nativeEvent.text)}
+          />
+          <SearchIconWrapper onPress={() => {}}>
             <FontAwesome5 name="search" color="#000" size={18} />
           </SearchIconWrapper>
         </SearchBarWrapper>
@@ -92,19 +112,19 @@ const Filter = ({ categoryList, children }) => {
           contentContainerStyle={{ paddingLeft: 10 }}
         >
           {categoryList.map((category, index) => (
-            <CategoryItemWrapper key={index}>
-              <TouchableOpacity onPress={category.callback}>
-                <CategoryContent>{category.value}</CategoryContent>
-              </TouchableOpacity>
+            <CategoryItemWrapper
+              key={index}
+              onPress={() => onCategorySelectedHandler(category.value)}
+              selected={selected.includes(category.value)}
+            >
+              <CategoryContent>{category.value}</CategoryContent>
             </CategoryItemWrapper>
           ))}
         </ScrollView>
       </CategoryContainer>
 
       {/* Gallery */}
-      <ScrollView style={{ flex: 1 }}>
-        <GalleryContainer>{children}</GalleryContainer>
-      </ScrollView>
+      <GalleryContainer>{children}</GalleryContainer>
     </React.Fragment>
   )
 }
