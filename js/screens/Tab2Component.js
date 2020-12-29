@@ -5,6 +5,7 @@ import TokenItem from '../components/TokenItem'
 import { ScrollView } from 'react-native-gesture-handler'
 import Filter from '../components/Filter'
 import GameInfoCard from '../components/GameInfoCard'
+import { ActivityIndicator } from 'react-native'
 
 const ThumbContainer = styled.View`
   flex: 1;
@@ -129,21 +130,40 @@ const sampleCategoryList = [
   }
 ]
 
+let count = 0
+
 const Tab2Component = () => {
   const [gameList, setGameList] = useState(sampleGameList)
+  const [showLoadingIcon, setShowLoadingIcon] = useState(true)
+
+  const getGameList = (searchText, selectedCategory) => {
+    count++
+    setShowLoadingIcon(true)
+    const callApi = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve()
+      }, 3000)
+    }).then(() => {
+      setGameList(
+        sampleGameList.filter(obj => {
+          if (!selectedCategory.length)
+            return obj.name.toUpperCase().includes(searchText.toUpperCase())
+          else
+            return (
+              obj.name.toUpperCase().includes(searchText.toUpperCase()) &&
+              obj.category.some(c => selectedCategory.indexOf(c) >= 0)
+            )
+        })
+      )
+      count--
+
+      if (count === 0) setShowLoadingIcon(false)
+    })
+  }
 
   const filterChangeHandler = ({ searchText, selectedCategory = [] }) => {
-    setGameList(
-      sampleGameList.filter(obj => {
-        if (!selectedCategory.length)
-          return obj.name.toUpperCase().includes(searchText.toUpperCase())
-        else
-          return (
-            obj.name.toUpperCase().includes(searchText.toUpperCase()) &&
-            obj.category.some(c => selectedCategory.indexOf(c) >= 0)
-          )
-      })
-    )
+    setGameList([])
+    getGameList(searchText, selectedCategory)
   }
 
   return (
@@ -163,29 +183,33 @@ const Tab2Component = () => {
           categoryList={sampleCategoryList}
         >
           <GalleryContainer>
-            {gameList && gameList.length > 0 ? (
-              <ScrollView
-                contentContainerStyle={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  flexWrap: 'wrap'
-                }}
-              >
-                {gameList.map((game, index) => (
-                  <GameInfoCard key={index} {...game} />
-                ))}
-              </ScrollView>
-            ) : (
-              <NotFoundContainer>
-                <NotFoundImage
-                  source={{
-                    uri:
-                      'https://www.nicepng.com/png/full/435-4350235_png-spongebob-mr-krabs-scared-1-by-supercaptainn.png'
+            {!showLoadingIcon ? (
+              gameList && gameList.length > 0 ? (
+                <ScrollView
+                  contentContainerStyle={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    flexWrap: 'wrap'
                   }}
-                  resizeMode="contain"
-                />
-                <NotFoundContent>No Game Available</NotFoundContent>
-              </NotFoundContainer>
+                >
+                  {gameList.map((game, index) => (
+                    <GameInfoCard key={index} {...game} />
+                  ))}
+                </ScrollView>
+              ) : (
+                <NotFoundContainer>
+                  <NotFoundImage
+                    source={{
+                      uri:
+                        'https://www.nicepng.com/png/full/435-4350235_png-spongebob-mr-krabs-scared-1-by-supercaptainn.png'
+                    }}
+                    resizeMode="contain"
+                  />
+                  <NotFoundContent>No Game Available</NotFoundContent>
+                </NotFoundContainer>
+              )
+            ) : (
+              <ActivityIndicator size="large" animating={showLoadingIcon} />
             )}
           </GalleryContainer>
         </Filter>
